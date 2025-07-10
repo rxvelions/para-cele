@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para Celeste 💗</title>
+  <style>
+    body {
+      background-color: #000000;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      overflow: hidden;
+      color: #ffb6c1;
+    }
+
+    .pantalla-inicial, .texto {
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      right: 10%;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2em;
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 105, 180, 0.3);
+      border: 1px solid #ff69b4;
+      z-index: 1;
+    }
+
+    h1 {
+      color: #ff69b4;
+      text-align: center;
+      font-size: 2em;
+    }
+
+    p {
+      font-size: 1.2em;
+      line-height: 1.7em;
+      white-space: pre-wrap;
+    }
+
+    .boton {
+      display: block;
+      margin: 2em auto 0;
+      padding: 0.7em 2em;
+      background-color: #ff69b4;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      box-shadow: 0 0 10px #ff69b4;
+    }
+
+    .flores-container {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes caer {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    .flor {
+      position: absolute;
+      animation: caer linear;
+      filter: drop-shadow(0 0 6px #ff69b4);
+    }
+  </style>
+</head>
+<body>
+  <div class="flores-container" id="flores-container"></div>
+
+  <div class="pantalla-inicial" id="pantalla-inicial">
+    <h1 id="frase"></h1>
+    <button class="boton" id="boton-ver" style="display:none;">Ver más</button>
+  </div>
+
+  <div class="texto" id="texto" style="display:none;">
+    <h1>🌹 Para Vos 🌹</h1>
+    <p id="mensaje"></p>
+  </div>
+
+  <script>
+    // Crear flores animadas
+    function crearFlor() {
+      const flor = document.createElement('div');
+      flor.classList.add('flor');
+      flor.innerHTML = '🌸';
+      flor.style.left = Math.random() * 100 + 'vw';
+      flor.style.top = '-5vh';
+      flor.style.fontSize = (Math.random() * 20 + 20) + 'px';
+      flor.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      flor.style.color = '#ff69b4';
+
+      document.getElementById('flores-container').appendChild(flor);
+
+      setTimeout(() => {
+        flor.remove();
+      }, 10000);
+    }
+    setInterval(crearFlor, 300);
+
+    // Efecto máquina de escribir
+    function escribirTexto(elemento, texto, velocidad, callback) {
+      let i = 0;
+      const intervalo = setInterval(() => {
+        if (i < texto.length) {
+          elemento.textContent += texto.charAt(i);
+          i++;
+        } else {
+          clearInterval(intervalo);
+          if (callback) callback();
+        }
+      }, velocidad);
+    }
+
+    // Pantalla inicial
+    const frase = "Esto fue hecho con mucho amor para Celeste 💗";
+    const h1 = document.getElementById("frase");
+    const boton = document.getElementById("boton-ver");
+
+    escribirTexto(h1, frase, 70, () => {
+      boton.style.display = "block";
+    });
+
+    // Texto largo
+    const mensajeCompleto = `A veces camino por un mundo que se siente ajeno, donde todo parece un eco, donde yo me veo, pero no me reconozco. Y en medio de esa niebla, apareciste vos.
+
+Con tus palabras suaves, como pétalos que caen sin hacer ruido, me recordaste que la realidad no siempre es lo que vemos, sino también lo que sentimos.
+
+Tu poema fue un abrazo que atravesó la niebla. No necesitabas entenderlo todo para estar, solo decidiste quedarte. Y eso, para mí, es más real que cualquier cosa.
+
+Esta página es solo un rincón para vos, con flores que nacen desde el fondo de este caos, porque vos, sin saberlo, sembraste algo hermoso en mí.
+
+Gracias por existir así, tan simplemente. Y por mirar este mundo conmigo, incluso cuando mis ojos no logran verlo del todo.
+
+— Con cariño, Alejandro 💌`;
+
+    boton.addEventListener("click", () => {
+      document.getElementById("pantalla-inicial").style.display = "none";
+      document.getElementById("texto").style.display = "block";
+      escribirTexto(document.getElementById("mensaje"), mensajeCompleto, 25);
+    });
+  </script>
+</body>
+</html>
